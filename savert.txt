@@ -1,0 +1,287 @@
+CREATE DATABASE project;
+''''''''''''''''
+USE project;
+
+
+CREATE TABLE main_table (
+    prod_id INT PRIMARY KEY,
+    cat VARCHAR(50),
+    prod_name VARCHAR(100),
+    qty INT,
+    seller VARCHAR(100),
+    price DECIMAL(10, 2),
+    brand VARCHAR(50)
+);
+
+'''''''''''''
+import mysql.connector as my
+
+# Connect to the database 'project'
+obj = my.connect(host="localhost", user="root", password="admin", database="project")
+cur = obj.cursor()
+
+# Data from your provided image (all records)
+records = [
+    (100, 'Smartphones', 'Vivo V12', -1, 'Vivo PVT.Ltd', 20000, 'VIVO'),
+    (101, 'Smartphones', 'Vivo V10 Pro', 20, 'Vivo PVT.Ltd', 47000, 'VIVO'),
+    (102, 'Smartphones', 'Vivo Z12', 18, 'Vivo PVT.Ltd', 18000, 'VIVO'),
+    (103, 'Smartphones', 'Iphone A10', 46, 'Apple PVT.Ltd', 48000, 'APPLE'),
+    (104, 'Smartphones', 'Iphone X11', 36, 'Apple PVT.Ltd', 35000, 'APPLE'),
+    (105, 'Smartphones', 'Iphone Z15 PLUS', 46, 'Apple PVT.Ltd', 37880, 'APPLE'),
+    (106, 'Smartphones', 'Infinix S17 LITE', 16, 'Infinix PVT.Ltd', 25800, 'INFINIX'),
+    (107, 'Smartphones', 'Infinix X729', 19, 'Infinix PVT.Ltd', 67598, 'INFINIX'),
+    (108, 'Smartphones', 'Infinix Z13', 22, 'Infinix PVT.Ltd', 25680, 'INFINIX'),
+    (109, 'TABLETS', 'Realme K19', 40, 'Realme PVT.Ltd', 31200, 'REALME'),
+    (110, 'TABLETS', 'Realme G7', 23, 'Realme PVT.Ltd', 21000, 'REALME'),
+    (111, 'Television', 'LG T20', 58, 'LG PVT.Ltd', 34000, 'LG'),
+    (112, 'Television', 'Sony A11', 23, 'Sony PVT.Ltd', 35000, 'Sony'),
+    (113, 'Television', 'Sony A11 Pro Plus', 19, 'Sony PVT.Ltd', 50000, 'Sony'),
+    (114, 'Television', 'Micromax B12', 14, 'Micromax PVT.Ltd', 40000, 'MICROMAX'),
+    (115, 'Clothes', 'Mens T-Shirt_S', 46, 'Zara Clothings', 1000, 'ZARA'),
+    (116, 'Clothes', 'Mens Sweat-Shirt_S', 20, 'Zara Clothings', 1200, 'ZARA'),
+    (117, 'Clothes', 'Women Saree', 25, 'Zara Clothings', 260, 'ZARA'),
+    (118, 'Clothes', 'Children Shirts_Pants', 14, 'Tim Clothings', 678, 'TIM'),
+    (119, 'Clothes', 'Women Leggings_L', 33, 'Tim Clothings', 1570, 'TIM'),
+    (120, 'Clothes', 'Women Salwar Kameez_XL', 25, 'Rajesh Clothings', 789, 'RAJESH'),
+    (121, 'Clothes', 'Women Jeans_M', 30, 'Rajesh Clothings', 1025, 'RAJESH'),
+    (122, 'Shoes_Footwears', 'Nike Canvas Shoes', 42, 'Nike Shoes and Footwears', 689, 'NIKE'),
+    (123, 'Shoes_Footwears', 'Nike Sports Shoes', 34, 'Nike Shoes and Footwears', 759, 'NIKE'),
+    (124, 'Shoes_Footwears', 'Adidas Sports Shoes', 23, 'Adidas Shoes and Footwears', 789, 'ADIDAS'),
+    (125, 'Shoes_Footwears', 'Adidas Canvas Shoes', 30, 'Adidas Shoes and Footwears', 809, 'ADIDAS'),
+    (126, 'Shoes_Footwears', 'Adidas Footwears', 45, 'Adidas Shoes and Footwears', 850, 'ADIDAS'),
+    (127, 'Shoes_Footwears', 'Bata Footwears', 56, 'Bata Shoes and Footwears', 980, 'BATA'),
+    (128, 'Shoes_Footwears', 'Bata Canvas Shoes', 62, 'Bata Shoes and Footwears', 900, 'BATA'),
+    (129, 'Shoes_Footwears', 'Bata Sports Shoes', 48, 'Bata Shoes and Footwears', 1020, 'BATA'),
+    (130, 'Grocery', 'Maggi Noodles', 48, 'Yippe PVT.Ltd', 15, 'MAGGI'),
+    (131, 'Grocery', 'Yippe Noodles', 78, 'Yippe PVT.Ltd', 25, 'YIPPE'),
+    (132, 'Grocery', 'Surfexel Detergent', 43, 'Surfexel PVT.Ltd', 780, 'SURFEXL'),
+    (133, 'Grocery', 'Nirma Detergent', 78, 'Nirma PVT.Ltd', 648, 'NIRMA'),
+    (134, 'Grocery', 'Bikaner Bhujia', 40, 'Bikaner PVT.Ltd', 178, 'BIKANER'),
+    (135, 'Grocery', 'Bikaner Bhujia', 38, 'Bikaner PVT.Ltd', 178, 'BIKANER'),
+    (136, 'Grocery', 'Haldiram Bhujia', 27, 'Haldiram PVT.Ltd', 265, 'HALDIRAM'),
+    (137, 'Games', 'Dragon Ball Kakkarot', 78, 'Bandai Games', 128, 'BANDAI'),
+    (138, 'Games', 'Dragon Seiya', 58, 'Bandai Games', 125, 'BANDAI'),
+    (139, 'Games', 'Call Of Duty', 47, 'Playstation Games', 150, 'Playstation'),
+    (140, 'Games', 'Dota', 50, 'Playstation Games', 150, 'Playstation')
+]
+
+# Insert all the data in one query
+query = "INSERT INTO main_table (prod_id, cat, prod_name, qty, seller, price, brand) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+cur.executemany(query, records)
+
+# Commit the transaction
+obj.commit()
+
+print("All records inserted successfully!")
+
+
+''''''''''
+
+
+import mysql.connector as my
+
+# Step 1: Connect to the MySQL database
+obj = my.connect(
+    host="localhost",
+    user="root",  # Your MySQL username
+    password="1234",  # Your MySQL password
+    database="project"  # Name of your database
+)
+
+cur = obj.cursor()
+
+# Step 2: Create the order_table without AUTO_INCREMENT
+create_table_query = """
+CREATE TABLE IF NOT EXISTS order_table (
+    tid INT PRIMARY KEY,
+    pid INT,
+    pname VARCHAR(50),
+    dispatch_date DATE,
+    customer_contact VARCHAR(15)
+);
+"""
+
+cur.execute(create_table_query)
+print("order_table created successfully.")
+
+# Step 3: Insert values into the table (without AUTO_INCREMENT)
+insert_values_query = """
+INSERT INTO order_table (tid, pid, pname, dispatch_date, customer_contact)
+VALUES (%s, %s, %s, %s, %s);
+"""
+
+# List of records to be inserted (including the transaction ID "tid")
+values_to_insert = [
+    (1, 100, 'Vivo V12', '2023-02-03', '1234567890'),
+    (2, 104, 'iPhone X11', '2023-02-03', '1234567890')
+]
+
+# Execute the insert statement for each value
+cur.executemany(insert_values_query, values_to_insert)
+
+# Commit the transaction
+obj.commit()
+
+print("Values inserted successfully.")
+
+# Optional: Fetch and display all rows from the table
+cur.execute("SELECT * FROM order_table;")
+rows = cur.fetchall()
+
+for row in rows:
+    print(row)
+
+# Close the connection
+cur.close()
+obj.close()
+
+'''''''''''''''''
+
+import mysql.connector as my
+
+# Step 1: Connect to the database
+obj = my.connect(
+    host="localhost",
+    user="root",  
+    password="1234",  
+    database="project"  
+)
+cur = obj.cursor()
+
+# Step 2: Function to list categories available
+def category():
+    print("************Categories available are: **************\n")
+    
+    query = "SELECT DISTINCT cat FROM main_table"
+    cur.execute(query)
+    fetch = cur.fetchall()
+    
+    # Display available categories
+    for i in fetch:
+        print(i[0])
+    
+    print("\n")
+    inpCategory = input("Enter your category: ")
+    print("\nWe have the following " + inpCategory + ":\n")
+    
+    # Query to get products based on category
+    query = "SELECT prod_name, price FROM main_table WHERE cat = '{}'".format(inpCategory)
+    cur.execute(query)
+    fetch = cur.fetchall()
+
+    # Display product names and prices
+    for i in fetch:
+        print(i[0] + " -------------- PRICE: " + str(i[1]))
+    
+    print("---------------X----------------------------")
+
+# Step 3: Function to list all products
+def product():
+    query = "SELECT prod_name, price FROM main_table"
+    cur.execute(query)
+    fetch = cur.fetchall()
+
+    # Display all products and their prices
+    for i in fetch:
+        print(i[0] + " -------------- PRICE: " + str(i[1]))
+
+    print("---------------X----------------------------")
+
+# Step 4: Function to list products from a specific brand
+def brand():
+    print("*************Brands available are: ***************\n")
+    
+    query = "SELECT DISTINCT brand FROM main_table"
+    cur.execute(query)
+    fetch = cur.fetchall()
+
+    # Display available brands
+    for i in fetch:
+        print(i[0])
+
+    print("\n")
+    inpBrand = input("What brand are you looking for? ")
+    print("\nWe have the following available products from " + inpBrand + ":\n")
+    
+    # Query to get products based on brand
+    query = "SELECT prod_name, price FROM main_table WHERE brand = '{}'".format(inpBrand)
+    cur.execute(query)
+    fetch = cur.fetchall()
+
+    # Display product names and prices
+    for i in fetch:
+        print(i[0] + " ----------- PRICE: " + str(i[1]))
+
+    print("---------------------------------------------------")
+
+# Step 5: Function to place an order
+def order():
+    inpContact = input("Enter your 10-digit phone number: ")
+    inpOrder = input("What do you want to order? ")
+    
+    # Query to get the quantity of the product
+    query = "SELECT qty FROM main_table WHERE prod_name = '{}'".format(inpOrder)
+    cur.execute(query)
+    fetch = cur.fetchone()  # Fetch the quantity for the product
+
+    if fetch and fetch[0] == 0:  # Check if the quantity is 0 (out of stock)
+        print("OUT OF STOCK!!!!!!")
+    else:
+        # Query to get the product ID
+        query = "SELECT prod_id FROM main_table WHERE prod_name = '{}'".format(inpOrder)
+        cur.execute(query)
+        fetch_id = cur.fetchone()  # Fetch the product ID
+
+        # For subtracting from main_table only if quantity > 0
+        query = "UPDATE main_table SET qty = qty - 1 WHERE prod_name = '{}'".format(inpOrder)
+        cur.execute(query)
+        obj.commit()
+
+        # Get the maximum tid (transaction ID) from the order_table and increment it by 1
+        query = "SELECT COALESCE(MAX(tid), 0) FROM order_table"
+        cur.execute(query)
+        max_tid = cur.fetchone()[0] + 1  # Increment the tid by 1
+
+        # Manually ask the user for the dispatch date
+        inpDate = input("Enter the dispatch date (YYYY-MM-DD): ")
+
+        # Insert order into order_table with the new tid
+        query = (
+            "INSERT INTO order_table (tid, pid, pname, dispatch_date, customer_contact) "
+            "VALUES ({}, {}, '{}', '{}', '{}')".format(max_tid, fetch_id[0], inpOrder, inpDate, inpContact)
+        )
+        cur.execute(query)
+        obj.commit()
+
+        print("Your order has been placed with transaction ID: " + str(max_tid))
+
+# Step 6: Main program loop to interact with the user, with exit option
+while True:
+    print("WELCOME TO E-SHOP :) \n")
+    print("Press 1 if you are looking for a category.")
+    print("Press 2 if you are looking for a product.")
+    print("Press 3 if you are looking for a brand.")
+    print("Press 4 if you want to place an order.")
+    print("Press 5 to exit.\n")
+
+    try:
+        inpInt = int(input("Enter your number: "))
+        print("\n")
+        if inpInt == 1:
+            category()
+        elif inpInt == 2:
+            product()
+        elif inpInt == 3:
+            brand()
+        elif inpInt == 4:
+            order()
+        elif inpInt == 5:
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("ERROR!!! Check your number.")
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+
+
+
