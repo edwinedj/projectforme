@@ -137,6 +137,17 @@ obj.close()
 
 '''''''''''''''''
 
+
+
+
+
+''''''''''''''''''BELOW CODE IS NOT NEEDED''''''''''''''''''''''''''''
+
+
+
+
+
+
 import mysql.connector as my
 
 # Step 1: Connect to the database
